@@ -20,12 +20,12 @@
 <body>
   <div class="wrapper">
     <div class="container">
-      <form class="form">
+      <form id="form" class="form">
         <h1>Register With Us</h1>
         <div class="form-control">
           <label for="username">Username</label>
           <input onchange="controlUsername(event)" id="username" placeholder="Enter username" type="text" minlength="3"
-            maxlength="16" required>
+            maxlength="16">
           <small id="username-error"></small>
         </div>
         <div class="form-control">
@@ -43,7 +43,7 @@
           <input onchange="passwordMatch()" id="confirm-password" placeholder="Enter password again" type="password">
           <small id="confirm-password-error"></small>
         </div>
-        <button id="button-submit" type="button">Submit</button>
+        <button id="button-submit" type="submit">Submit</button>
       </form>
     </div>
   </div>
