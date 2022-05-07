@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validator</title>
+
+  <!-- Css Files -->
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="index.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <form class="form">
+        <h1>Register With Us</h1>
+        <div class="form-control">
+          <label for="username">Username</label>
+          <input onchange="controlUsername(event)" id="username" placeholder="Enter username" type="text" minlength="3"
+            maxlength="16" required>
+          <small id="username-error"></small>
+        </div>
+        <div class="form-control">
+          <label for="username">Email</label>
+          <input onchange="controlEmail(event)" id="email" placeholder="Enter email" type="email">
+          <small id="email-error"></small>
+        </div>
+        <div class="form-control">
+          <label for="username">Password</label>
+          <input onchange="controlPassword()" id="password" placeholder="Enter password" type="password">
+          <small id="password-error"></small>
+        </div>
+        <div class="form-control">
+          <label for="username">Confirm Passord</label>
+          <input onchange="passwordMatch()" id="confirm-password" placeholder="Enter password again" type="password">
+          <small id="confirm-password-error"></small>
+        </div>
+        <button id="button-submit" type="button">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="index.js" defer></script>
+</body>
+
+</html>
