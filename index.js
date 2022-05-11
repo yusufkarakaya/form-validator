@@ -1,110 +1,78 @@
-const passwordId = document.getElementById('password');
-const passwordErrorID = document.getElementById('password-error');
-const confirmPasswordId = document.getElementById('confirm-password');
-const confirmPasswordError = document.getElementById('confirm-password-error');
-const userNameId = document.getElementById('username');
-const userNameError = document.getElementById('username-error');
-const emailId = document.getElementById('email');
-const emailError = document.getElementById('email-error');
+const form = document.getElementById('form');
+const username = document.getElementById('username');
+const email = document.getElementById('email');
+const password = document.getElementById('password');
+const password2 = document.getElementById('password2');
 
-function controlUsername(event) {
-  event.preventDefault();
-
-  if (userNameId.value.length >= 3) {
-    userNameError.textContent = '';
-    userNameId.focus();
-    userNameId.style.borderColor = 'green';
-  }
-  if (userNameId.value.length < 3) {
-    userNameError.textContent = 'Username must be at least 3 characters';
-    userNameError.style.color = 'red';
-    userNameId.focus();
-    userNameId.style.borderColor = 'red';
-  }
-  if (userNameId.value.length >= 15) {
-    userNameError.textContent = 'Username must be less than 15 characters';
-    userNameError.style.color = 'red';
-    userNameId.focus();
-    userNameId.style.borderColor = 'red';
-  }
+//Show Error Message
+function showError(input, message) {
+  const formControl = input.parentElement;
+  formControl.className = 'form-control error';
+  const small = formControl.querySelector('small');
+  small.innerText = message;
 }
 
-function controlEmail(event) {
-  event.preventDefault();
-
-  const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (emailId.value.match(mailformat)) {
-    emailId.focus();
-    emailId.style.borderColor = 'green';
-    emailError.textContent = '';
-  } else {
-    emailError.textContent = 'Email is not valid';
-    emailId.style.borderColor = 'red';
-    emailError.style.color = 'red';
-  }
+//Show Success Massage
+function showSuccess(input) {
+  const formControl = input.parentElement;
+  formControl.className = 'form-control success';
 }
 
-function controlPassword() {
-  const password = /^[A-Za-z]\w{5,24}$/;
-  if (passwordId.value.length >= 6 && passwordId.value.length <= 25) {
-    if (passwordId.value.length[0] !== 'string') {
-      passwordErrorID.textContent = 'First character must be letter';
-    }
-    if (passwordId.value.match(password)) {
-      passwordId.style.borderColor = 'green';
-      passwordErrorID.textContent = '';
-    }
-  }
-
-  if (passwordId.value.length < 6) {
-    passwordErrorID.textContent = 'Password must be at least 6 characters';
-    passwordId.style.borderColor = 'red';
-    passwordErrorID.style.color = 'red';
-  }
-  if (passwordId.value.length > 25) {
-    passwordErrorID.textContent = 'Password must be less than 25 characters';
-    passwordId.style.borderColor = 'red';
-    passwordErrorID.style.color = 'red';
-  }
-}
-
-function passwordMatch() {
-  if (confirmPasswordId.value.length === passwordId.value.length) {
-    if (confirmPasswordId.value.match(passwordId)) {
-      confirmPasswordId.style.borderColor = 'green';
-      confirmPasswordError.textContent = '';
-    }
-  } else {
-    confirmPasswordId.style.borderColor = 'red';
-    confirmPasswordError.textContent = 'Passwords do not match';
-    confirmPasswordError.style.color = 'red';
-  }
-}
-
-window.onload = function () {
-  document.getElementById('form').addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    if (userNameId.value.length === 0) {
-      userNameError.textContent = 'Username must be at least 3 characters';
-      userNameError.style.color = 'red';
-      userNameId.focus();
-      userNameId.style.borderColor = 'red';
-    }
-    if (emailId.value.length === 0) {
-      emailError.textContent = 'Email is not valid';
-      emailId.style.borderColor = 'red';
-      emailError.style.color = 'red';
-    }
-    if (passwordId.value.length === 0) {
-      passwordErrorID.textContent = 'Password must be at least 6 characters';
-      passwordId.style.borderColor = 'red';
-      passwordErrorID.style.color = 'red';
-    }
-    if (confirmPasswordId.value.length === 0) {
-      confirmPasswordId.style.borderColor = 'red';
-      confirmPasswordError.textContent = 'Passwords do not match';
-      confirmPasswordError.style.color = 'red';
+//Check Input Message
+function checkInput(inputArray) {
+  inputArray.forEach((input) => {
+    if (input.value === '') {
+      showError(input, `${getFirstCharUpper(input)} is required.`);
+    } else {
+      showSuccess(input);
     }
   });
-};
+}
+
+//Check Input Length
+function checkLength(input, min, max) {
+  if (input.value.length < min) {
+    showError(
+      input,
+      `${getFirstCharUpper(input)} must be at least ${min} characters`
+    );
+  } else if (input.value.length > max) {
+    showError(
+      input,
+      `${getFirstCharUpper(input)} must be less than ${max} characters`
+    );
+  } else {
+    showSuccess(input);
+  }
+}
+
+function checkEmail(input) {
+  const re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  if (re.test(input.value.trim())) {
+    showSuccess(input);
+  } else {
+    showError(input, 'Email is not valid');
+  }
+}
+
+function checkPasswordMatch(input1, input2) {
+  if (input1.value !== input2.value) {
+    showError(input2, 'Passwords do not match');
+  }
+}
+
+function getFirstCharUpper(input) {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  checkInput([username, email, password, password2]);
+  checkLength(username, 3, 12);
+  checkLength(password, 6, 25);
+  checkEmail(email);
+  checkPasswordMatch(password, password2);
+});

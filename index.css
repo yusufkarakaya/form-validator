@@ -5,6 +5,11 @@
   margin: 0;
 }
 
+:root {
+  --success-color: #2ecc71;
+  --error-color: #e74c3c;
+}
+
 body {
   background-color: #f9fafb;
   min-height: 100vh;
@@ -52,6 +57,28 @@ h1 {
   padding: 10px;
   font-size: 14px;
   position: relative;
+}
+
+.form-control.success input {
+  border-color: var(--success-color);
+}
+.form-control.error input {
+  border-color: var(--error-color);
+}
+
+.form-control.success small {
+  color: var(--success-color);
+}
+.form-control.error small {
+  color: var(--error-color);
+}
+
+.form-control.error small {
+  visibility: visible;
+}
+
+.form-control.success small {
+  visibility: hidden;
 }
 
 .form button {
