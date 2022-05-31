@@ -8,3 +8,6 @@ checkRequired() to accept array of inputs
 checkLength() to check min and max length
 checkEmail() to validate email with regex
 checkPasswordsMatch() to match confirm password
+
+<strong>Live Demo</strong>
+https://yusufkarakaya.github.io/form-validator/
